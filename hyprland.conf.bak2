@@ -1,0 +1,536 @@
+# ╔══════════════════════════════════════════════════════════════╗
+# ║         EVE-PRIME — OMNIVERSE OS                             ║
+# ║         Hyprland 0.53.0 | Ubuntu 25.10 | Ryzen 7 6800H       ║
+# ║         AMD Radeon | 1080p 100Hz | Glass Void Aesthetic      ║
+# ╚══════════════════════════════════════════════════════════════╝
+
+# ═══════════════════════════════════════════
+# MONITOR
+# ═══════════════════════════════════════════
+monitor = HDMI-A-1, 1920x1080@100, 0x0, 1
+# monitor = HDMI-A-1, 3840x2160@59.94, 0x0, 1.25
+monitor = ,preferred,auto,1
+
+# ═══════════════════════════════════════════
+# ENVIRONMENT — Wayland + AMD GPU (Xwayland Bridge Active)
+# ═══════════════════════════════════════════
+env = GDK_BACKEND,wayland,x11,*
+env = QT_QPA_PLATFORM,wayland;xcb
+env = QT_WAYLAND_DISABLE_WINDOWDECORATION,1
+env = QT_AUTO_SCREEN_SCALE_FACTOR,1
+env = SDL_VIDEODRIVER,wayland
+env = CLUTTER_BACKEND,wayland
+env = XDG_CURRENT_DESKTOP,Hyprland
+env = XDG_SESSION_TYPE,wayland
+env = XDG_SESSION_DESKTOP,Hyprland
+env = MOZ_ENABLE_WAYLAND,1
+env = MOZ_USE_XINPUT2,1
+env = MOZ_WEBRENDER,1
+env = ELECTRON_OZONE_PLATFORM_HINT,wayland
+env = LIBVA_DRIVER_NAME,radeonsi
+env = VDPAU_DRIVER,radeonsi
+env = AMD_VULKAN_ICD,RADV
+env = WLR_RENDERER,vulkan
+env = WLR_NO_HARDWARE_CURSORS,1
+env = XCURSOR_SIZE,24
+
+# ═══════════════════════════════════════════
+# AUTOSTART — Absolute Paths Only
+# ═══════════════════════════════════════════
+exec-once = /home/omniking/.config/hypr/scripts/mpvpaper_launch.sh
+exec-once = /usr/bin/hyprpm reload -n
+exec-once = /usr/bin/waybar
+exec-once = /usr/bin/mako
+exec-once = /usr/bin/hypridle
+exec-once = /usr/bin/nm-applet --indicator
+exec-once = /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec-once = /usr/bin/wl-clipboard-history -t
+exec-once = /home/omniking/.config/hypr/scripts/hotplug-daemon.sh
+exec-once = /home/omniking/.config/hypr/scripts/monitor-hotplug.sh
+exec-once = /home/omniking/.local/bin/omni-menu --daemon
+exec-once = /usr/bin/firefox 2>/dev/null
+
+# ═══════════════════════════════════════════
+# GENERAL
+# ═══════════════════════════════════════════
+general {
+    gaps_in = 4
+    gaps_out = 10
+    border_size = 2
+    col.active_border = rgba(88c0d0ff) rgba(b48eadff) 45deg
+    col.inactive_border = rgba(2e3440aa)
+    layout = dwindle
+    resize_on_border = true
+    allow_tearing = false
+    snap {
+        enabled = true
+        window_gap = 10
+        monitor_gap = 10
+    }
+}
+
+# ═══════════════════════════════════════════
+# DECORATION — Glass void
+# ═══════════════════════════════════════════
+decoration {
+    rounding = 12
+    active_opacity = 0.95
+    inactive_opacity = 0.82
+    fullscreen_opacity = 1.0
+
+    shadow {
+        enabled = true
+        range = 25
+        render_power = 4
+        color = rgba(00000099)
+        color_inactive = rgba(0000004d)
+        offset = 0 6
+    }
+
+    blur {
+        enabled = true
+        size = 10
+        passes = 3
+        noise = 0.015
+        contrast = 1.1
+        brightness = 0.9
+        vibrancy = 0.25
+        vibrancy_darkness = 0.0
+        special = true
+        popups = true
+        new_optimizations = true
+        ignore_opacity = false
+        xray = false
+    }
+
+    dim_inactive = true
+    dim_strength = 0.12
+    dim_special = 0.3
+}
+
+# ═══════════════════════════════════════════
+# ANIMATIONS — Cinematic sci-fi
+# ═══════════════════════════════════════════
+animations {
+    enabled = true
+
+    bezier = expo,       0.16, 1, 0.3, 1
+    bezier = overshot,   0.05, 0.9, 0.1, 1.1
+    bezier = smoothOut,  0.36, 0, 0.66, -0.56
+    bezier = smoothIn,   0.25, 1, 0.5, 1
+    bezier = snappy,     0.68, -0.55, 0.27, 1.55
+    bezier = linear,     0.0, 0.0, 1.0, 1.0
+    bezier = cinematic,  0.4, 0.0, 0.2, 1.0
+
+    animation = windowsIn,        1, 5, expo,      slide
+    animation = windowsOut,       1, 4, smoothOut, slide
+    animation = windowsMove,      1, 4, cinematic, slide
+    animation = fadeIn,           1, 5, smoothIn
+    animation = fadeOut,          1, 4, smoothOut
+    animation = fadeDim,          1, 4, smoothIn
+    animation = fadeSwitch,       1, 4, smoothIn
+    animation = fadeShadow,       1, 4, smoothIn
+    animation = fadeLayersIn,     1, 4, expo
+    animation = fadeLayersOut,    1, 3, smoothOut
+    animation = workspaces,       1, 5, expo,      slidevert
+    animation = specialWorkspace, 1, 5, expo,      slidevert
+    animation = border,           1, 8, linear
+    animation = borderangle,      1, 80, linear,   loop
+}
+
+# ═══════════════════════════════════════════
+# INPUT
+# ═══════════════════════════════════════════
+input {
+    kb_layout = us
+    kb_options = caps:escape
+    follow_mouse = 1
+    mouse_refocus = true
+    float_switch_override_focus = 2
+    sensitivity = 0.0
+    accel_profile = flat
+
+    touchpad {
+        natural_scroll = true
+        tap-to-click = true
+        drag_lock = true
+        scroll_factor = 0.8
+    }
+}
+
+# ═══════════════════════════════════════════
+# LAYOUT
+# ═══════════════════════════════════════════
+dwindle {
+    pseudotile = true
+    preserve_split = true
+    smart_split = true
+    smart_resizing = true
+    force_split = 2
+}
+
+master {
+    new_status = master
+    new_on_top = true
+    mfact = 0.55
+}
+
+# ═══════════════════════════════════════════
+# MISC
+# ═══════════════════════════════════════════
+misc {
+    disable_hyprland_logo = true
+    disable_splash_rendering = true
+    mouse_move_enables_dpms = true
+    key_press_enables_dpms = true
+    always_follow_on_dnd = true
+    animate_manual_resizes = true
+    animate_mouse_windowdragging = true
+    enable_swallow = true
+    swallow_regex = ^(kitty|gnome-terminal)$
+    focus_on_activate = false
+    vfr = true
+    vrr = 0
+    middle_click_paste = true
+}
+
+# ═══════════════════════════════════════════
+# PLUGINS
+# ═══════════════════════════════════════════
+plugin = /usr/local/lib/hyprland/hyprexpo.so
+
+plugin {
+    hyprexpo {
+        columns = 3
+        gap_size = 8
+        bg_col = rgba(0d0d1aee)
+        workspace_method = center current
+        enable_gesture = false
+    }
+}
+
+# ═══════════════════════════════════════════
+# RENDER
+# ═══════════════════════════════════════════
+render {
+    direct_scanout = true
+}
+
+# ═══════════════════════════════════════════
+# CURSOR
+# ═══════════════════════════════════════════
+cursor {
+    no_hardware_cursors = true
+    inactive_timeout = 5
+}
+
+# ═══════════════════════════════════════════
+# KEYBINDINGS
+# 3-path rule: keyboard + mouse + UI for every feature
+# ═══════════════════════════════════════════
+
+# -----------------------------------------------
+# SUPER KEY — workspace overview (tap alone)
+# -----------------------------------------------
+bindr = SUPER, Super_L, exec, /home/omniking/.config/hypr/scripts/overview_toggle.sh
+
+# -----------------------------------------------
+# APP LAUNCHERS
+# -----------------------------------------------
+bind = SUPER, D,           exec, wofi --show drun
+bind = SUPER SHIFT, D,     exec, wofi --show run
+bind = SUPER, Return,      exec, kitty
+bind = CTRL ALT, T,        exec, kitty
+bind = SUPER, E,           exec, thunar
+bind = SUPER, B,           exec, firefox
+bind = SUPER, I,           exec, hyprpicker -a
+
+# -----------------------------------------------
+# WINDOW CONTROL
+# -----------------------------------------------
+# Close window — 3 ways
+bind = SUPER, Q,           killactive
+bind = ALT, F4,            killactive
+bind = SUPER, mouse:274,   killactive
+
+# Fullscreen — 3 ways
+bind = SUPER, F,           fullscreen, 0
+bind = SUPER, F11,         fullscreen, 0
+bind = ALT, F10,           fullscreen, 1
+
+# Float + center — toggle
+bind = SUPER, V,           togglefloating
+bind = SUPER, C,           centerwindow
+
+# Maximize (fills screen, keeps titlebar behavior)
+bind = SUPER, M,           fullscreen, 1
+
+# Minimize to scratchpad
+bind = SUPER, minus,       movetoworkspace, special:minimize
+bind = SUPER SHIFT, minus, togglespecialworkspace, minimize
+
+# Pseudo tile
+bind = SUPER, P,           pseudo
+bind = SUPER, T,           togglesplit
+
+# -----------------------------------------------
+# SCREENSHOT — Absolute Path Tri-State
+# -----------------------------------------------
+bind = SUPER, S, exec, /home/omniking/.local/bin/grimblast copysave area /home/omniking/Pictures/region_target.png
+bind = SUPER SHIFT, S, exec, /home/omniking/.local/bin/grimblast copysave screen /home/omniking/Pictures/full_target.png
+bind = SUPER ALT, S, exec, /home/omniking/.local/bin/grimblast copysave active /home/omniking/Pictures/window_target.png
+
+# -----------------------------------------------
+# FOCUS MOVEMENT (vim + arrows)
+# -----------------------------------------------
+bind = SUPER, H,           movefocus, l
+bind = SUPER, semicolon,   movefocus, r
+bind = SUPER, K,           movefocus, u
+bind = SUPER, J,           movefocus, d
+bind = SUPER, left,        movefocus, l
+bind = SUPER, right,       movefocus, r
+bind = SUPER, up,          movefocus, u
+bind = SUPER, down,        movefocus, d
+
+# Cycle windows on workspace
+bind = ALT, Tab,           cyclenext
+bind = ALT SHIFT, Tab,     cyclenext, prev
+
+# -----------------------------------------------
+# MOVE WINDOWS
+# -----------------------------------------------
+bind = SUPER SHIFT, H,     movewindow, l
+bind = SUPER SHIFT, L,     movewindow, r
+bind = SUPER SHIFT, K,     movewindow, u
+bind = SUPER SHIFT, J,     movewindow, d
+bind = SUPER SHIFT, left,  movewindow, l
+bind = SUPER SHIFT, right, movewindow, r
+bind = SUPER SHIFT, up,    movewindow, u
+bind = SUPER SHIFT, down,  movewindow, d
+
+# -----------------------------------------------
+# RESIZE WINDOWS
+# -----------------------------------------------
+binde = SUPER ALT, right,  resizeactive,  40 0
+binde = SUPER ALT, left,   resizeactive, -40 0
+binde = SUPER ALT, up,     resizeactive,  0 -40
+binde = SUPER ALT, down,   resizeactive,  0 40
+binde = SUPER ALT, L,      resizeactive,  40 0
+binde = SUPER ALT, H,      resizeactive, -40 0
+binde = SUPER ALT, K,      resizeactive,  0 -40
+binde = SUPER ALT, J,      resizeactive,  0 40
+
+# -----------------------------------------------
+# MOUSE WINDOW CONTROL
+# -----------------------------------------------
+bindm = SUPER, mouse:272,  movewindow
+bindm = SUPER, mouse:273,  resizewindow
+
+# -----------------------------------------------
+# WORKSPACES — switch
+# -----------------------------------------------
+bind = SUPER, 1,  workspace, 1
+bind = SUPER, 2,  workspace, 2
+bind = SUPER, 3,  workspace, 3
+bind = SUPER, 4,  workspace, 4
+bind = SUPER, 5,  workspace, 5
+bind = SUPER, 6,  workspace, 6
+bind = SUPER, 7,  workspace, 7
+bind = SUPER, 8,  workspace, 8
+bind = SUPER, 9,  workspace, 9
+bind = SUPER, 0,  workspace, 10
+
+bind = SUPER, Tab,         workspace, e+1
+bind = SUPER SHIFT, Tab,   workspace, e-1
+bind = SUPER, mouse_down,  workspace, e+1
+bind = SUPER, mouse_up,    workspace, e-1
+
+# -----------------------------------------------
+# WORKSPACES — move window to workspace
+# -----------------------------------------------
+bind = SUPER SHIFT, 1, movetoworkspace, 1
+bind = SUPER SHIFT, 2, movetoworkspace, 2
+bind = SUPER SHIFT, 3, movetoworkspace, 3
+bind = SUPER SHIFT, 4, movetoworkspace, 4
+bind = SUPER SHIFT, 5, movetoworkspace, 5
+bind = SUPER SHIFT, 6, movetoworkspace, 6
+bind = SUPER SHIFT, 7, movetoworkspace, 7
+bind = SUPER SHIFT, 8, movetoworkspace, 8
+bind = SUPER SHIFT, 9, movetoworkspace, 9
+
+# Move silently (no focus switch)
+bind = SUPER ALT, 1,   movetoworkspacesilent, 1
+bind = SUPER ALT, 2,   movetoworkspacesilent, 2
+bind = SUPER ALT, 3,   movetoworkspacesilent, 3
+bind = SUPER ALT, 4,   movetoworkspacesilent, 4
+bind = SUPER ALT, 5,   movetoworkspacesilent, 5
+bind = SUPER ALT, 6,   movetoworkspacesilent, 6
+bind = SUPER ALT, 7,   movetoworkspacesilent, 7
+bind = SUPER ALT, 8,   movetoworkspacesilent, 8
+bind = SUPER ALT, 9,   movetoworkspacesilent, 9
+
+# -----------------------------------------------
+# SCRATCHPADS
+# -----------------------------------------------
+# Drop-down terminal (F12)
+bind = SUPER, F12,         togglespecialworkspace, terminal
+bind = SUPER, F12,         exec, [workspace special:terminal silent] kitty
+
+# Void scratchpad
+bind = SUPER, Z,           togglespecialworkspace, void
+
+# -----------------------------------------------
+# QUICK TOOLS
+# -----------------------------------------------
+bind = SUPER, F9,          exec, kitty --title btop -e btop
+bind = SUPER, F10,         exec, pavucontrol
+bind = SUPER SHIFT, W,     exec, /home/omniking/.config/hypr/scripts/omni_wall.sh
+
+# Clipboard history
+bind = SUPER, XF86Clipboard, exec, wl-clipboard-history -t
+
+# -----------------------------------------------
+# LOCK + SYSTEM
+# -----------------------------------------------
+# Lock — 3 ways
+bind = SUPER, Escape,      exec, hyprlock
+bind = SUPER, XF86Sleep,   exec, hyprlock
+bind = CTRL ALT, L,        exec, hyprlock
+
+# Hyprland reload
+bind = SUPER CTRL, R,      exec, hyprctl reload && notify-send "Hyprland" "Config reloaded ✓"
+bind = SUPER CTRL, Q,      exit
+
+# Display switch
+bind = SUPER, F1, exec, hyprctl keyword monitor "HDMI-A-1, 1920x1080@100, 0x0, 1"
+bind = SUPER, F2, exec, hyprctl keyword monitor "HDMI-A-1, 3840x2160@59.94, 0x0, 1.25"
+
+# -----------------------------------------------
+# SCREENSHOT — 3 ways
+# -----------------------------------------------
+bind = , Print,            exec, grimblast copysave screen
+bind = SHIFT, Print,       exec, grimblast copysave active
+bind = SUPER SHIFT, S,     exec, grimblast copysave area
+bind = SUPER, Print,       exec, grimblast save screen /home/omniking/Pictures/
+
+# -----------------------------------------------
+# MEDIA
+# -----------------------------------------------
+bind = , XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+bind = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bind = , XF86AudioMute,        exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bind = , XF86AudioMicMute,     exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+bind = , XF86AudioPlay,        exec, playerctl play-pause
+bind = , XF86AudioNext,        exec, playerctl next
+bind = , XF86AudioPrev,        exec, playerctl previous
+bind = , XF86AudioStop,        exec, playerctl stop
+bind = SUPER, F5,              exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bind = SUPER, F6,              exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+bind = SUPER, F7,              exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+
+# -----------------------------------------------
+# BRIGHTNESS
+# -----------------------------------------------
+bind = , XF86MonBrightnessUp,   exec, brightnessctl set 5%+
+bind = , XF86MonBrightnessDown, exec, brightnessctl set 5%-
+
+# ═══════════════════════════════════════════
+# WORKSPACES — Named
+# ═══════════════════════════════════════════
+workspace = 1,  name:MAIN,   monitor:HDMI-A-1, default:true
+workspace = 2,  name:CODE,   monitor:HDMI-A-1
+workspace = 3,  name:WEB,    monitor:HDMI-A-1
+workspace = 4,  name:COMMS,  monitor:HDMI-A-1
+workspace = 5,  name:MEDIA,  monitor:HDMI-A-1
+workspace = 6,  name:FILES,  monitor:HDMI-A-1
+workspace = 7,  name:SYS,    monitor:HDMI-A-1
+workspace = 8,  name:DOCKER, monitor:HDMI-A-1
+workspace = 9,  name:VOID,   monitor:HDMI-A-1
+
+# ═══════════════════════════════════════════
+# WINDOW RULES
+# ═══════════════════════════════════════════
+
+# --- Terminals ---
+windowrule = opacity 0.92 0.80,      match:class kitty
+windowrule = opacity 0.92 0.80,      match:class gnome-terminal-server
+
+# --- Browser ---
+windowrule = workspace 3,            match:class firefox
+windowrule = opacity 1.0 1.0,        match:class firefox
+windowrule = workspace 3,            match:class chromium
+windowrule = workspace 3,            match:class brave-browser
+
+# --- Code editors ---
+windowrule = workspace 2,            match:class code-oss
+windowrule = workspace 2,            match:class Code
+windowrule = workspace 2,            match:class neovide
+
+# --- Comms ---
+windowrule = workspace 4,            match:class discord
+windowrule = workspace 4,            match:class slack
+windowrule = workspace 4,            match:class telegram-desktop
+windowrule = workspace 4,            match:class thunderbird
+
+# --- Media ---
+windowrule = workspace 5,            match:class vlc
+windowrule = workspace 5,            match:class spotify
+windowrule = workspace 5,            match:title Spotify
+windowrule = immediate on,           match:class mpv
+
+# --- Files ---
+windowrule = float on,               match:class thunar
+windowrule = size 1100 700,          match:class thunar
+windowrule = center on,              match:class thunar
+windowrule = float on,               match:class nemo
+windowrule = center on,              match:class nemo
+
+# --- Audio mixer ---
+windowrule = float on,               match:class pavucontrol
+windowrule = center on,              match:class pavucontrol
+windowrule = size 800 600,           match:class pavucontrol
+
+# --- System tools ---
+windowrule = float on,               match:title btop
+windowrule = size 1400 800,          match:title btop
+windowrule = center on,              match:title btop
+windowrule = float on,               match:class gnome-control-center
+windowrule = center on,              match:class gnome-control-center
+windowrule = size 900 650,           match:class gnome-control-center
+
+# --- Color picker ---
+windowrule = float on,               match:class hyprpicker
+windowrule = center on,              match:class hyprpicker
+
+# --- Launcher ---
+windowrule = float on,               match:class wofi
+windowrule = center on,              match:class wofi
+
+# --- File dialogs ---
+windowrule = float on,               match:title Open File
+windowrule = float on,               match:title Save File
+windowrule = float on,               match:title Open Folder
+windowrule = center on,              match:title Open File
+windowrule = center on,              match:title Save File
+
+# --- Archive manager ---
+windowrule = float on,               match:class file-roller
+windowrule = center on,              match:class file-roller
+windowrule = size 800 600,           match:class file-roller
+
+# --- Calculator ---
+windowrule = float on,               match:class gnome-calculator
+windowrule = center on,              match:class gnome-calculator
+windowrule = size 400 600,           match:class gnome-calculator
+
+# --- Network / Bluetooth ---
+windowrule = float on,               match:class blueman-manager
+windowrule = center on,              match:class blueman-manager
+windowrule = float on,               match:class nm-connection-editor
+windowrule = center on,              match:class nm-connection-editor
+
+# --- Picture-in-Picture ---
+windowrule = float on,               match:title Picture-in-Picture
+windowrule = pin on,                 match:title Picture-in-Picture
+windowrule = size 480 270,           match:title Picture-in-Picture
+windowrule = move 100%-490 100%-280, match:title Picture-in-Picture
